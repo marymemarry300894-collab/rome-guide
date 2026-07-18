@@ -1,0 +1,93 @@
+{
+  "doria_pamphilj": {
+    "lat": 41.8976,
+    "lng": 12.4805,
+    "display": "Galleria Doria Pamphilj, Via del Corso, Roma"
+  },
+  "appetito": {"lat": 41.9097, "lng": 12.4572, "display": "Appetito Pizza Gourmet, Via dei Gracchi, Prati, Roma"},
+  "colonna": {
+    "lat": 41.897909,
+    "lng": 12.4840678,
+    "display": "Palazzo Colonna, Via del Vaccaro, Trevi, Municipio Roma I, Rome, Roma Capitale, Lazio, 00187, Italy"
+  },
+  "quadrighe": {
+    "lat": 41.9107,
+    "lng": 12.4835,
+    "display": "Terrazza delle Quadrighe, Palazzo delle Esposizioni, Roma"
+  },
+  "aventino": {
+    "lat": 41.8827,
+    "lng": 12.4833,
+    "display": "Terrazza Belvedere Aventino, Giardino degli Aranci, Roma"
+  },
+  "altemps": {
+    "lat": 41.9012178,
+    "lng": 12.4730992,
+    "display": "Palazzo Altemps, 46, Piazza di Sant'Apollinare, Ponte, Municipio Roma I, Rome, Roma Capitale, Lazio, 00186, Italy"
+  },
+  "teatro_marcello": {
+    "lat": 41.891945,
+    "lng": 12.4797604,
+    "display": "Theatre of Marcellus, Via del Foro Piscario, Sant'Angelo, Municipio Roma I, Rome, Roma Capitale, Lazio, 00186, Italy"
+  },
+  "torre_argentina": {
+    "lat": 41.8959948,
+    "lng": 12.4768388,
+    "display": "Largo di Torre Argentina, Pigna, Municipio Roma I, Rome, Roma Capitale, Lazio, Italy"
+  },
+  "pamphilj": {
+    "lat": 41.8989,
+    "lng": 12.4731,
+    "display": "Palazzo Pamphilj, Piazza Navona, Roma"
+  },
+  "mattei": {
+    "lat": 41.8945064,
+    "lng": 12.478076,
+    "display": "Palazzo Caetani, Via Michelangelo Caetani, Sant'Angelo, Municipio Roma I, Rome, Roma Capitale, Lazio, 00186, Italy"
+  },
+  "via_margutta": {
+    "lat": 41.9086166,
+    "lng": 12.4795284,
+    "display": "Via Margutta, Campo Marzio, Municipio Roma I, Rome, Roma Capitale, Lazio, 00187, Italy"
+  },
+  "barberini": {
+    "lat": 41.9034733,
+    "lng": 12.4901355,
+    "display": "Palazzo Barberini, Via Barberini, Trevi, Municipio Roma I, Rome, Roma Capitale, Lazio, 00817, Italy"
+  },
+  "santa_maria_popolo": {
+    "lat": 41.9109,
+    "lng": 12.4765,
+    "display": "Santa Maria del Popolo, Piazza del Popolo, Roma"
+  },
+  "san_luigi": {
+    "lat": 41.8995875,
+    "lng": 12.4745426,
+    "display": "Church of Saint Louis the French, Piazza di San Luigi De' Francesi, Sant'Eustachio, Municipio Roma I, Rome, Roma Capitale, Lazio, 00186, Italy"
+  },
+  "santi_giovanni_paolo": {
+    "lat": 41.8865492,
+    "lng": 12.4920995,
+    "display": "Basilica dei Santi Giovanni e Paolo, Clivo di Scauro, Celio, Municipio Roma I, Rome, Roma Capitale, Lazio, 00184, Italy"
+  },
+  "santa_maria_maggiore": {
+    "lat": 41.8976275,
+    "lng": 12.4984704,
+    "display": "Basilica of Saint Mary Major, Piazza di Santa Maria Maggiore, Monti, Municipio Roma I, Rome, Roma Capitale, Lazio, 00185, Italy"
+  },
+  "fontana_api": {
+    "lat": 41.9042974,
+    "lng": 12.4887672,
+    "display": "Fountain of the Bees, Piazza Barberini, Ludovisi, Municipio Roma I, Rome, Roma Capitale, Lazio, 00817, Italy"
+  },
+  "barcaccia": {
+    "lat": 41.9058019,
+    "lng": 12.4822453,
+    "display": "Fontana della Barcaccia, Spanish Square, Campo Marzio, Municipio Roma I, Rome, Roma Capitale, Lazio, 00187, Italy"
+  },
+  "fontana_moro": {
+    "lat": 41.898109,
+    "lng": 12.4731525,
+    "display": "Fontana del Moro, Piazza Navona, Parione, Municipio Roma I, Rome, Roma Capitale, Lazio, 00186, Italy"
+  }
+}
