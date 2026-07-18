@@ -49,7 +49,7 @@ days = [
              "desc": "Легендарное место основания Рима, вид сверху на Форум и Большой цирк.",
              "lat": 41.8886, "lng": 12.4870},
             {"img": b["pantheon"], "name": "Пантеон", "time": "13:30 – 15:00",
-             "desc": "Бесплатный вход, очередь утром небольшая. Знаменитый купол с окулюсом — шедевр инженерии.",
+             "desc": "Вход платный (~5 €, с 2023 года). Обязательно бронируйте онлайн на pantheonroma.com — иначе не пустят. Внутри — знаменитый купол с окулюсом, шедевр инженерии.",
              "lat": 41.8986, "lng": 12.4769},
             {"img": b["trevi"], "name": "Фонтан Треви", "time": "12:30 – 13:30",
              "desc": "Бросьте монетку на возвращение в Рим. Лучше рано утром или вечером — меньше толпы.",
@@ -67,7 +67,7 @@ days = [
         "color": "#27ae60",
         "places": [
             {"img": b["vatican"], "name": "Музеи Ватикана + Сикстинская капелла", "time": "09:00 – 12:30",
-             "desc": "Онлайн-билет skip-the-line ~21 € (включает собор). Приходите к открытию, чтобы избежать очередей.",
+             "desc": "Вход платный (~20–30 €, онлайн skip-the-line). Билет включает Сикстинскую капеллу. Приходите к открытию (09:00), чтобы избежать очередей.",
              "lat": 41.9065, "lng": 12.4536},
             {"img": b["stpeter"], "name": "Базилика Святого Петра", "time": "12:30 – 13:30",
              "desc": "Бесплатный вход (может быть очередь). Подъём на купол ~8 € — вид на всю площадь и город.",
@@ -85,13 +85,13 @@ days = [
         "color": "#2980b9",
         "places": [
             {"img": b["borghese"], "name": "Вилла Боргезе", "time": "09:00 – 11:30",
-             "desc": "Просторный парк для утренней прогулки. Галерея Боргезе — билет ~15 €, нужна предбронь.",
+             "desc": "Парк бесплатный — идеален для утренней прогулки. Галерея Боргезе внутри — платно (~13–15 €), обязательно бронируйте заранее на galeriaborghese.it (пропускают строго по времени).",
              "lat": 41.9135, "lng": 12.4886},
             {"img": b["navona"], "name": "Пьяцца дель Пополо", "time": "12:00 – 13:30",
              "desc": "Терраса Пинчо — панорама на город. Рядом церковь Santa Maria del Popolo с работами Караваджо.",
              "lat": 41.9109, "lng": 12.4765},
             {"img": b["pantheon"], "name": "Пантеон (вечерний визит)", "time": "15:00 – 16:30",
-             "desc": "Вечером меньше людей и красивый свет для фото.",
+             "desc": "Вход платный (~5 €, бронь на pantheonroma.com). Вечером меньше людей и красивый свет для фото. Если уже были внутри в День 1 — можно просто посидеть на площади рядом.",
              "lat": 41.8986, "lng": 12.4769},
         ],
         "dinner": {"name": "La Montecarlo", "link": "https://www.tripadvisor.com/Restaurant_Review-g187791-d2326017-Reviews-La_Montecarlo-Rome_Lazio.html",
@@ -185,6 +185,12 @@ html = f'''<!DOCTYPE html>
   .dot {{ width:13px; height:13px; border-radius:50%; display:inline-block; }}
   .tips {{ background:#fff; border-radius:12px; padding:1.3rem 1.5rem; margin-top:1.5rem; box-shadow:0 3px 10px rgba(0,0,0,.08); }}
   .tips li {{ margin:.4rem 0; }}
+  .tickets {{ background:#fff; border-radius:12px; padding:1.3rem 1.5rem; margin-top:1.5rem; box-shadow:0 3px 10px rgba(0,0,0,.08); overflow-x:auto; }}
+  .tickets table {{ width:100%; border-collapse:collapse; font-size:.88rem; }}
+  .tickets th, .tickets td {{ border-bottom:1px solid #eee; padding:.55rem .6rem; text-align:left; }}
+  .tickets th {{ background:#fafafa; color:#c0392b; }}
+  .tickets .free {{ color:#27ae60; font-weight:700; }}
+  .tickets .paid {{ color:#e67e22; font-weight:700; }}
   footer {{ text-align:center; color:#888; font-size:.85rem; padding:2rem 1rem; }}
 </style>
 </head>
@@ -215,6 +221,27 @@ html = f'''<!DOCTYPE html>
     <span><i class="dot" style="background:#27ae60"></i> День 2 — Ватикан</span>
     <span><i class="dot" style="background:#2980b9"></i> День 3 — Парк и центр</span>
     <span><i class="dot" style="background:#f1c40f"></i> Ужин</span>
+  </div>
+
+  <div class="tickets">
+    <h3>Билеты и вход (актуально на 2024–2025 гг., цены ориентировочные)</h3>
+    <table>
+      <thead><tr><th>Объект</th><th>Вход</th><th>Цена</th><th>Бронь</th></tr></thead>
+      <tbody>
+        <tr><td>Колизей + Форум + Палатин</td><td class="paid">платно</td><td>~16–18 €</td><td>да (skip-the-line)</td></tr>
+        <tr><td>Пантеон</td><td class="paid">платно (с 2023)</td><td>~5 €</td><td>да, pantheonroma.com</td></tr>
+        <tr><td>Фонтан Треви</td><td class="free">бесплатно</td><td>—</td><td>—</td></tr>
+        <tr><td>Пьяцца Навона</td><td class="free">бесплатно</td><td>—</td><td>—</td></tr>
+        <tr><td>Музеи Ватикана + Сикстинская капелла</td><td class="paid">платно</td><td>~20–30 €</td><td>да (skip-the-line)</td></tr>
+        <tr><td>Базилика Св. Петра</td><td class="free">бесплатно</td><td>—</td><td>очередь</td></tr>
+        <tr><td>Купол Св. Петра</td><td class="paid">платно</td><td>~8–10 €</td><td>нет</td></tr>
+        <tr><td>Трастевере (район)</td><td class="free">бесплатно</td><td>—</td><td>—</td></tr>
+        <tr><td>Вилла Боргезе (парк)</td><td class="free">бесплатно</td><td>—</td><td>—</td></tr>
+        <tr><td>Галерея Боргезе</td><td class="paid">платно</td><td>~13–15 €</td><td>да, galeriaborghese.it</td></tr>
+        <tr><td>Пьяцца дель Пополо</td><td class="free">бесплатно</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.8rem;color:#888;margin:.6rem 0 0">Точные цены и часы работы проверяйте на официальных сайтах перед поездкой — к 2026 г. возможны небольшие изменения. Roma Pass (48 ч) покрывает первые 2 платных объекта бесплатно.</p>
   </div>
 
   <div class="tips">
