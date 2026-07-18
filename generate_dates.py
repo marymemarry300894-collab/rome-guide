@@ -14,7 +14,6 @@ def b64(name):
     with open(p, "rb") as f:
         return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
-# image key -> file (reuse existing)
 IM = {
     "doria": b64("doria_pamphilj.jpg"),
     "appetito": b64("appetito.jpg") if os.path.exists(os.path.join(IMG,"appetito.jpg")) else None,
@@ -35,7 +34,6 @@ IM = {
     "api": b64("fontana_api.jpg") if os.path.exists(os.path.join(IMG,"fontana_api.jpg")) else None,
     "barcaccia": b64("barcaccia.jpg"),
     "moro": b64("fontana_moro.jpg"),
-    # base64 from earlier set
     "colosseum": b64("colosseum.jpg"),
     "forum": b64("forum.jpg"),
     "palatine": b64("palatine.jpg"),
@@ -54,68 +52,77 @@ HOTEL = {"name":"Hotel Villa Pinciana","addr":"Via Abruzzi 11, Виа Венет
 def img(key):
     return IM.get(key) or IM.get("pantheon")
 
-# ---- itinerary ----
+BREAKFAST = {"img": None, "name":"🍳 ЗАВТРАК в отеле (Hotel Villa Pinciana)",
+             "time":"08:00 – 09:00", "desc":"Возврат в отель к 8:00 на завтрак. Передохни, зарядись кофе и энергией перед второй половиной дня пешком.",
+             "lat":HOTEL["lat"], "lng":HOTEL["lng"], "is_breakfast":True}
+
+# ---- itinerary: each full day = morning (4-8) + breakfast + after ----
 days = [
  {
   "date":"29 августа (чт) — вечер прилёта",
   "mode":"Прилёт после 16:00 · лёгкий вечерний разогрев пешком",
   "color":"#8e44ad",
-  "places":[
+  "morning":[],
+  "after":[
     {"img":img("popolo"),"name":"Пьяцца дель Пополо + Санта-Мария-дель-Пополо","time":"16:30 – 17:30",
      "desc":"Старт у отеля. Пьяцца дель Пополо — главные ворота Рима, рядом базилика с работами Караваджо. Терраса Пинчо — вид на город вечером.","lat":41.9109,"lng":12.4765},
     {"img":img("margutta"),"name":"Via Margutta","time":"17:30 – 18:15",
      "desc":"Тихая творческая улица художников, в 2 минутах от Пьяцца дель Пополо. Уютно и без толпы.","lat":41.9086,"lng":12.4795},
     {"img":img("barcaccia"),"name":"Испанская лестница + Фонтан Barcaccia","time":"18:15 – 19:00",
      "desc":"Поднимитесь по Испанской лестнице, у её подножья — фонтан-лодка Barcaccia (Бернини).","lat":41.9058,"lng":12.4822},
-    {"img":img("doria"),"name":"Галерея Дориа-Памфили (снаружи/вечерний осмотр)","time":"19:00 – 19:45",
-     "desc":"Одна из лучших частных коллекций Рима (Рафаэль, Караваджо, Веласкес). Вечером у фасада на Via del Corso приятно просто постоять. Если успеваете — билет на утро следующего дня.","lat":41.8976,"lng":12.4805},
+    {"img":img("doria"),"name":"Галерея Дориа-Памфилj (вечерний осмотр снаружи)","time":"19:00 – 19:45",
+     "desc":"Одна из лучших частных коллекций Рима. Вечером у фасада на Via del Corso приятно постоять. Если успеваете — билет на утро 30.08.","lat":41.8976,"lng":12.4805},
     {"img":img("appetito"),"name":"Ужин: Appetito Pizza Gourmet","time":"20:00 – 21:30",
      "desc":"Пиццерия 4,8★ (Via dei Gracchi, район Прати). Или вернитесь ближе к центру — выбор за вами.","lat":41.9097,"lng":12.4572},
   ],
  },
  {
   "date":"30 августа (пт) — полный день, античный Рим + дворцы",
-  "mode":"Подъём в 4:00 · пешком весь день до ~22:00",
+  "mode":"Подъём в 4:00 · 8:00 завтрак в отеле · пешком до ~22:00",
   "color":"#e74c3c",
-  "places":[
+  "morning":[
     {"img":img("colosseum"),"name":"Колизей (рассвет)","time":"04:00 – 05:30",
      "desc":"Приходите к открытию неба — пусто, прохладно, идеальный свет. Билет комбо с Форумом+Палатином (~16–18 €, бронь онлайн).","lat":41.8902,"lng":12.4922},
-    {"img":img("forum"),"name":"Римский Форум + Палатин","time":"05:30 – 08:00",
-     "desc":"Сердце древнего Рима. Идите от Колизея к Палатину для панорамы.","lat":41.8919,"lng":12.4853},
-    {"img":img("marcello"),"name":"Театр Марцелла + Торре-Арджентина","time":"08:30 – 09:30",
-     "desc":"Театр Марцелла — древний амфитеатр, рядом Ларго ди Торре-Арджентина с руинами и кошачьим приютом.","lat":41.8919,"lng":12.4798},
-    {"img":img("altemps"),"name":"Палаццо Альтемпс","time":"09:30 – 10:30",
+    {"img":img("forum"),"name":"Римский Форум + Палатин","time":"05:30 – 07:00",
+     "desc":"Сердце древнего Рима. Идите от Колизея к Палатину для панорамы, затем выходите к центру по пути домой.","lat":41.8919,"lng":12.4853},
+    {"img":img("torre"),"name":"Театр Марцелла + Торре-Арджентина (по пути к отелю)","time":"07:00 – 07:45",
+     "desc":"Древний амфитеатр и Ларго ди Торре-Арджентина — на пути обратно к отелю. К 8:00 будешь на завтраке.","lat":41.896,"lng":12.4768},
+  ],
+  "after":[
+    {"img":img("altemps"),"name":"Палаццо Альтемпс","time":"09:00 – 10:00",
      "desc":"Филиал Национального музея Рима, великолепная античная скульптура. Билет ~12 € (входит в Roma Pass).","lat":41.9012,"lng":12.4731},
-    {"img":img("pantheon"),"name":"Пантеон (прогулка, билет 31-го)","time":"10:30 – 11:00",
+    {"img":img("pantheon"),"name":"Пантеон (прогулка, билет 31-го)","time":"10:00 – 10:30",
      "desc":"Подойдите к фасаду, посмотрите на площадь. Сам вход — по купленному билету 31.08 в 11:00.","lat":41.8986,"lng":12.4769},
-    {"img":img("moro"),"name":"Пьяцца Навона + Фонтан Мавра + Палаццо Памфилj","time":"11:00 – 12:30",
-     "desc":"Барочная площадь, фонтаны Бернини. Palazzo Pamphilj на площади — резиденция Бразилии, снаружи красиво.","lat":41.8981,"lng":12.4732},
-    {"img":img("mattei"),"name":"Палаццо Маттеи + Еврейский гетто","time":"12:30 – 13:30",
+    {"img":img("moro"),"name":"Пьяцца Навона + Фонтан Мавра + Палаццо Памфилj","time":"10:30 – 12:00",
+     "desc":"Барочная площадь, фонтаны Бернини. Palazzo Pamphilj на площади — резиденция Бразилии.","lat":41.8981,"lng":12.4732},
+    {"img":img("mattei"),"name":"Палаццо Маттеи + Еврейский гетто (обед)","time":"12:00 – 13:30",
      "desc":"Район гетто: Палаццо Маттеи, Портико д'Отавия. Обед в гетто (карпаччо, артишоки по-еврейски).","lat":41.8945,"lng":12.4781},
     {"img":img("api"),"name":"Фонтан Пчёл + Дворец Барберини","time":"13:30 – 14:30",
-     "desc":"Маленький фонтан Пчёл (Бернини) у площади Барберини. Дворец Барберини — галерея национальной античности (~12 €).","lat":41.9043,"lng":12.4888},
+     "desc":"Маленький фонтан Пчёл (Бернини) у площади Барберини. Дворец Барберини — галерея (~12 €).","lat":41.9043,"lng":12.4888},
     {"img":img("colonna"),"name":"Дворец Колонна","time":"14:30 – 16:00",
      "desc":"Галерея 4,9★ — один из самых красивых частных дворцов. Открыт только по субботам с 9:00 (30.08 — суббота, попадает!). Билет ~12 €.","lat":41.8979,"lng":12.4841},
-    {"img":img("trastevere"),"name":"Трастевере + обед/ужин","time":"16:00 – 19:00",
+    {"img":img("trastevere"),"name":"Трастевере + ужин","time":"16:00 – 19:00",
      "desc":"Живописный район, площадь Santa Maria in Trastevere. Ужин в trattoria (≤30 €).","lat":41.889,"lng":12.4691},
-    {"img":img("borghese"),"name":"Вилла Боргезе (парк)","time":"19:00 – 21:00",
-     "desc":"Парк бесплатно, вечерняя прогулка к террасе Пинчо. Галерея внутри — по билетам, но вечером закрыта.","lat":41.9135,"lng":12.4886},
+    {"img":img("borghese"),"name":"Вилла Боргезе (парк, вечер)","time":"19:00 – 21:00",
+     "desc":"Парк бесплатно, вечерняя прогулка к террасе Пинчо.","lat":41.9135,"lng":12.4886},
   ],
  },
  {
   "date":"31 августа (сб) — ДЕНЬ БИЛЕТОВ: Пантеон 11:00 + Ватикан 17:00",
-  "mode":"Подъём в 4:00 · жёсткие привязки по билетам",
+  "mode":"Подъём в 4:00 · 8:00 завтрак в отеле · жёсткие привязки по билетам",
   "color":"#27ae60",
-  "places":[
+  "morning":[
     {"img":img("maggiore"),"name":"Санта-Мария-Маджоре","time":"04:00 – 05:15",
      "desc":"Одна из четырёх главных базилик Рима (4,8★, 56k отзывов). Ранним утром пустая и торжественная.","lat":41.8976,"lng":12.4985},
     {"img":img("luigi"),"name":"Сан-Луиджи-деи-Франчези","time":"05:15 – 06:00",
      "desc":"Французская церковь с тремя шедеврами Караваджо (зал св. Матфея). Бесплатно.","lat":41.8996,"lng":12.4745},
     {"img":img("giovanni"),"name":"Санти-Джованни-э-Паоло (Целий)","time":"06:00 – 07:00",
      "desc":"Базилика на холме Целий с садами и видом. Рядом — вход к дому св. Климента.","lat":41.8865,"lng":12.4921},
-    {"img":img("aventino"),"name":"Терраса Авентино (Giardino degli Aranci)","time":"07:00 – 08:00",
-     "desc":"Смотровая 4,8★ — вид на купол Св. Петра сквозь апельсиновый сад. Бесплатно, открыто с рассвета.","lat":41.8827,"lng":12.4833},
-    {"img":img("trevi"),"name":"Фонтан Треви (ранняя толпа меньше)","time":"08:00 – 09:00",
+    {"img":img("aventino"),"name":"Терраса Авентино (Giardino degli Aranci)","time":"07:00 – 07:45",
+     "desc":"Смотровая 4,8★ — вид на купол Св. Петра сквозь апельсиновый сад. Бесплатно, открыто с рассвета. Затем путь к отелю к 8:00.","lat":41.8827,"lng":12.4833},
+  ],
+  "after":[
+    {"img":img("trevi"),"name":"Фонтан Треви (ранняя толпа меньше)","time":"09:00 – 10:00",
      "desc":"Подойти бесплатно. Кинь монетку на возвращение. В Google есть платные туры от ~2 € — опционально.","lat":41.9009,"lng":12.4833},
     {"img":img("pantheon"),"name":"ПАНТЕОН (КУПЛЕННЫЙ БИЛЕТ 11:00)","time":"10:30 – 12:00",
      "desc":"Вход платный (~5 €), бронь на pantheonroma.com на 31.08 11:00. Приходите за 15 мин. Купол с окулюсом — обязательно.","lat":41.8986,"lng":12.4769},
@@ -133,18 +140,20 @@ days = [
  },
  {
   "date":"1 сентября (вт) — финальное утро, выезд до 11:00",
-  "mode":"Подъём в 4:00 · всё закончить к 11:00",
+  "mode":"Подъём в 4:00 · 8:00 завтрак в отеле · всё закончить к 11:00",
   "color":"#2980b9",
-  "places":[
+  "morning":[
     {"img":img("quadrighe"),"name":"Terrazza delle Quadrighe (рассвет)","time":"04:00 – 05:00",
      "desc":"Смотровая 4,6★ на крыше Palazzo delle Esposizioni — панорама Рима на рассвете. Проверь часы открытия.","lat":41.9107,"lng":12.4835},
     {"img":img("trevi"),"name":"Фонтан Треви (пустой!)","time":"05:00 – 06:00",
      "desc":"В 5 утра фонтан почти пустой — лучшее время для фото и монетки.","lat":41.9009,"lng":12.4833},
     {"img":img("torre"),"name":"Прогулка центром: Торре-Арджентина, Пантеон снаружи","time":"06:00 – 07:30",
-     "desc":"Спокойный утренний Рим. Заскочите на площадь перед Пантеоном ещё раз.","lat":41.896,"lng":12.4768},
-    {"img":img("appetito"),"name":"Завтрак/ранний обед: Appetito Pizza Gourmet","time":"07:30 – 09:00",
-     "desc":"Последняя пицца перед отъездом (4,8★).","lat":41.9097,"lng":12.4572},
-    {"img":img("popolo"),"name":"Возврат в отель, сборы","time":"09:00 – 11:00",
+     "desc":"Спокойный утренний Рим. Заскочите на площадь перед Пантеоном ещё раз по пути домой.","lat":41.896,"lng":12.4768},
+  ],
+  "after":[
+    {"img":img("appetito"),"name":"Прогулка/кофе: Appetito Pizza Gourmet","time":"09:00 – 10:00",
+     "desc":"Последняя пицца/кофе перед отъездом (4,8★).","lat":41.9097,"lng":12.4572},
+    {"img":img("popolo"),"name":"Возврат в отель, сборы к выезду 11:00","time":"10:00 – 11:00",
      "desc":"Путь к отелю (Via Abruzzi 11), сборы к выезду в 11:00.","lat":41.9091,"lng":12.4922},
   ],
  },
@@ -153,9 +162,26 @@ days = [
 # cards
 cards = []
 for d in days:
-    items = []
-    for p in d["places"]:
-        items.append(f'''
+    blocks = []
+    for p in d.get("morning", []):
+        blocks.append(f'''
+        <div class="place">
+            <img src="{p['img']}" alt="{p['name']}">
+            <div class="info">
+                <div class="time">{p['time']}</div>
+                <div class="pname">{p['name']}</div>
+                <div class="desc">{p['desc']}</div>
+            </div>
+        </div>''')
+    if d.get("morning"):
+        blocks.append(f'''
+        <div class="breakfast">
+            <div class="time">{BREAKFAST['time']}</div>
+            <div class="pname">{BREAKFAST['name']}</div>
+            <div class="desc">{BREAKFAST['desc']}</div>
+        </div>''')
+    for p in d.get("after", []):
+        blocks.append(f'''
         <div class="place">
             <img src="{p['img']}" alt="{p['name']}">
             <div class="info">
@@ -168,8 +194,8 @@ for d in days:
     <div class="day">
         <h2 style="border-bottom:3px solid {d['color']}">{d['date']}</h2>
         <div class="mode">🚶 {d['mode']}</div>
-        <div class="start">🏠 Старт: {HOTEL['name']} ({HOTEL['addr']})</div>
-        {''.join(items)}
+        <div class="start">🏠 Отель: {HOTEL['name']} ({HOTEL['addr']})</div>
+        {''.join(blocks)}
     </div>''')
 
 # JS markers + routes
@@ -177,7 +203,13 @@ js_markers = [f'L.marker([{HOTEL["lat"]}, {HOTEL["lng"]}], {{icon: homeIcon}}).a
 js_routes = []
 for di, d in enumerate(days, 1):
     route = [[HOTEL["lat"], HOTEL["lng"]]]
-    for p in d["places"]:
+    for p in d.get("morning", []):
+        route.append([p["lat"], p["lng"]])
+        js_markers.append(f'L.marker([{p["lat"]}, {p["lng"]}]).addTo(map).bindPopup("<b>{p["name"]}</b><br>{d["date"].split(" — ")[0]} · {p["time"]}");')
+    if d.get("morning"):
+        route.append([HOTEL["lat"], HOTEL["lng"]])  # return for breakfast
+        js_markers.append(f'L.marker([{HOTEL["lat"]}, {HOTEL["lng"]}], {{icon: homeIcon}}).addTo(map).bindPopup("<b>🍳 Завтрак в отеле</b><br>{HOTEL["addr"]}<br>08:00");')
+    for p in d.get("after", []):
         route.append([p["lat"], p["lng"]])
         js_markers.append(f'L.marker([{p["lat"]}, {p["lng"]}]).addTo(map).bindPopup("<b>{p["name"]}</b><br>{d["date"].split(" — ")[0]} · {p["time"]}");')
     js_routes.append(f'L.polyline({route}, {{color:"{d["color"]}", weight:4, opacity:0.8}}).addTo(map);')
@@ -211,6 +243,8 @@ html = f'''<!DOCTYPE html>
   .time {{ font-weight:700; color:#7f8c8d; font-size:.8rem; }}
   .pname {{ font-weight:700; margin:.05rem 0; font-size:.92rem; }}
   .desc {{ font-size:.84rem; line-height:1.35; }}
+  .breakfast {{ background:#e8f8e8; border-left:5px solid #27ae60; border-radius:8px; padding:.7rem .9rem; margin:.6rem 0; }}
+  .breakfast .pname {{ color:#1e8449; }}
   #map {{ height:560px; width:100%; border-radius:12px; margin:1.8rem 0; box-shadow:0 3px 10px rgba(0,0,0,.12); }}
   .legend {{ display:flex; gap:1.1rem; flex-wrap:wrap; justify-content:center; margin:.5rem 0 0; font-size:.82rem; }}
   .legend span {{ display:inline-flex; align-items:center; gap:.4rem; }}
@@ -223,13 +257,13 @@ html = f'''<!DOCTYPE html>
 <body>
 <header>
   <h1>Рим · 29.08 – 01.09 2026</h1>
-  <p>Персональный пеший маршрут по твоему списку Google · подъём в 4:00, возврат ~21–22:00<br>
-  Отель: Hotel Villa Pinciana · билеты: Пантеон 31.08 11:00, Ватикан 31.08 17:00</p>
+  <p>Персональный пеший маршрут по твоему списку Google · подъём в 4:00, завтрак в отеле в 8:00, возврат ~21–22:00<br>
+  Отель: Hotel Villa Pinciana (Via Abruzzi 11) · билеты: Пантеон 31.08 11:00, Ватикан 31.08 17:00</p>
 </header>
 
 <div class="hotelbox">
-  🏠 <b>Отправная точка:</b> {HOTEL['name']} — {HOTEL['addr']}<br>
-  <span style="color:#27ae60;font-weight:700">Рейтинг {HOTEL['rating']}</span>
+  🏠 <b>Отправная точка и завтрак:</b> {HOTEL['name']} — {HOTEL['addr']}<br>
+  <span style="color:#27ae60;font-weight:700">Рейтинг {HOTEL['rating']}</span> · каждый день возврат к 8:00 на завтрак
 </div>
 
 <div class="wrap">
@@ -237,25 +271,26 @@ html = f'''<!DOCTYPE html>
     {''.join(cards)}
   </div>
 
-  <h2 style="text-align:center">Карта маршрута (пеший)</h2>
+  <h2 style="text-align:center">Карта маршрута (пеший, с возвратом на завтрак)</h2>
   <div id="map"></div>
   <div class="legend">
     <span><i class="dot" style="background:#8e44ad"></i> 29.08 вечер</span>
     <span><i class="dot" style="background:#e74c3c"></i> 30.08 полный день</span>
     <span><i class="dot" style="background:#27ae60"></i> 31.08 билеты</span>
     <span><i class="dot" style="background:#2980b9"></i> 01.09 утро</span>
-    <span><i class="dot" style="background:#f1c40f"></i> 🏠 Отель</span>
+    <span><i class="dot" style="background:#f1c40f"></i> 🏠 Отель / завтрак</span>
   </div>
 
   <div class="tips">
-    <h3>Советы для пешего режима 4:00 – 22:00</h3>
+    <h3>Советы для режима 4:00 – 8:00 завтрак – 22:00</h3>
     <ul>
+      <li><b>Завтрак в отеле в 8:00 каждый полный день</b> — утренняя сессия (4:00–8:00) строится так, чтобы ты успела вернуться пешком к отелю к 8:00.</li>
       <li>Удобная обувь — за день будет 20–30 км пешком. Бери воду (фонтаны-nasoni бесплатны).</li>
       <li>Ранние старты (4:00) — лучший свет и пустые площади (Треви в 5 утра — почти никого).</li>
       <li>Жёсткие точки: <b>Пантеон 31.08 11:00</b> и <b>Ватикан 31.08 17:00</b> — не пропусти, билеты куплены.</li>
       <li>Дворец Колонна открыт только по субботам (30.08 попадает) — план учёл.</li>
-      <li>Вика Авентино и Quadrighe — проверь часы открытия (некоторые смотровые работают с 9–10).</li>
-      <li>Маршруты на карте построены пешком от отеля по времени визита.</li>
+      <li>Смотровые Авентино и Quadrighe — проверь часы открытия (некоторые работают с 9–10).</li>
+      <li>Маршруты на карте петляют через отель в 8:00 (завтрак).</li>
     </ul>
   </div>
 </div>
@@ -265,7 +300,7 @@ html = f'''<!DOCTYPE html>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   const map = L.map('map').setView([41.903, 12.476], 13);
-  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{ maxZoom:19, attribution:'&copy; OpenStreetMap' }}).addTo(map);
+  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{{{y}}}}.png', {{ maxZoom:19, attribution:'&copy; OpenStreetMap' }}).addTo(map);
   const homeIcon = L.divIcon({{ className:'', html:'<div style="background:#f1c40f;width:18px;height:18px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;">🏠</div>', iconSize:[18,18], iconAnchor:[9,9] }});
   {markers_js}
   {routes_js}
